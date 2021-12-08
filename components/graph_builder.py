@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import dash
 import pytz
 from dash import html, dash_table, dcc, Output, Input
 import pandas as pd
@@ -165,6 +166,7 @@ class GraphBuilder():
                                      options=[{'label': i, 'value': i} for i in ['gold', 'silver', 'diff']],
                                      value='gold'
                                      ),
+                        html.Button('GO!', className='btn btn-light w-100 my-3', id='input-breakdown-submit'),
                     ], className='col'),
                 ], className='row my-3'),
                 html.Div(id='breakdown-container')
@@ -192,10 +194,16 @@ gb = GraphBuilder()
 @app.callback(
     [Output("breakdown-container", "children")],
     [Input('input-breakdown-range', 'start_date'), Input('input-breakdown-range', 'end_date'),
-     Input('input-breakdown-day', 'value'), Input('input-breakdown-sort', 'value')],
+     Input('input-breakdown-day', 'value'), Input('input-breakdown-sort', 'value'), Input('input-breakdown-submit', 'n_clicks')],
 )
-def input_json(start, end, day, sort):
-    if start is None or end is None:
+def input_json(start, end, day, sort, n_clicks):
+    ctx = dash.callback_context
+    trigger = ctx.triggered[0]['prop_id'].split('.')[0]
+    print(trigger)
+    if start is None or end is None or n_clicks is None:
+        raise PreventUpdate
+
+    if trigger != 'input-breakdown-submit':
         raise PreventUpdate
 
     timezone = pytz.timezone("EST")
