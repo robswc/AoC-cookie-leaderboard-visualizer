@@ -149,7 +149,7 @@ class GraphBuilder():
                 html.Div([
                     self.render_leaderboard(self.build_leaderboard_data())
                 ])
-            ]),
+            ], className='custom-tab', selected_className='custom-tab--selected'),
             dcc.Tab(label='Daily Breakdown', children=[
                 html.Div([
                     html.Div([
@@ -168,7 +168,7 @@ class GraphBuilder():
                     ], className='col'),
                 ], className='row my-3'),
                 html.Div(id='breakdown-container')
-            ], className='dark-blue'),
+            ], className='custom-tab', selected_className='custom-tab--selected'),
             dcc.Tab(label='All Time', disabled=True, children=[
                 dcc.Graph(
                     figure={
