@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import pytz
 from dash import html, dash_table, dcc, Output, Input
 import pandas as pd
 from dash.exceptions import PreventUpdate
@@ -197,7 +198,10 @@ def input_json(start, end, day, sort):
     if start is None or end is None:
         raise PreventUpdate
 
-    start_ts = datetime.datetime.strptime(start, '%Y-%m-%d').timestamp()
-    end_ts = datetime.datetime.strptime(end, '%Y-%m-%d').timestamp()
+    timezone = pytz.timezone("EST")
+    start_ts = datetime.datetime.strptime(start, '%Y-%m-%d')
+    start_ts = timezone.localize(start_ts).timestamp()
+    end_ts = datetime.datetime.strptime(end, '%Y-%m-%d')
+    end_ts = timezone.localize(end_ts).timestamp()
 
     return gb.render_daily_breakdown(day, start_ts, end_ts, sort)
