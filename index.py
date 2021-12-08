@@ -5,6 +5,9 @@ from dash import html
 
 from layouts.home import home_layout
 
+# create server
+server = app.server
+
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
@@ -15,7 +18,7 @@ app.layout = html.Div([
               Input('url', 'pathname'))
 def display_page(pathname):
     print(pathname)
-    if pathname == '/':
+    if pathname == '/' or pathname == '' or pathname == '/home':
         return home_layout()
     else:
         return '404'

@@ -1,4 +1,5 @@
 import dash
+from dash import html
 
 external_stylesheets = [
     'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
@@ -14,7 +15,4 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets, external_sc
 
 # set title
 app.title = 'AoC Cookie Leaderboard'
-
-# create server
-server = app.server
 
